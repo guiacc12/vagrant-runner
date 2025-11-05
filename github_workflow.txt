@@ -1,0 +1,21 @@
+name: Deploy para VM Local
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # Roda na própria VM!
+    
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v3
+    
+    - name: Atualizar site
+      run: |
+        cd /var/www/html
+        sudo git pull origin main
+        sudo systemctl restart nginx
+        echo "Deploy realizado com sucesso em $(date)"
